@@ -14,16 +14,17 @@
   let today = new Date();
   let date = `${today.getFullYear()}-${(today.getMonth() + 1).toString().padStart(2, '0')}-${today.getDate().toString().padStart(2, '0')}`;
   let isPaused = true;
+  let numReps;
   
   function addRep(workoutNum) {
-    activeRoutine.workouts[workoutNum].reps.push(null);
+    numReps = activeRoutine.workouts[workoutNum].reps.push(null);
     activeRoutine.workouts[workoutNum].weights.push(null);
-    console.log(activeRoutine.workouts);
   }
 
   function removeRep(workoutNum) {
     activeRoutine.workouts[workoutNum].reps.pop();
     activeRoutine.workouts[workoutNum].weights.pop();
+    numReps = activeRoutine.workouts[workoutNum].reps.length;
   }
 
   function updateRoutineName(e) {
@@ -61,15 +62,17 @@
     {#each [...Array(activeRoutine.workouts.length).keys()] as workoutNum}
       <div>
         <input type="text" id="workout-{workoutNum}" class="exercise-input" value={activeRoutine.workouts[workoutNum].name}>
-        <div>
-          {#each [...Array(activeRoutine.workouts[workoutNum].reps.length).keys()] as repNum}
+        <div style="display: inline-block;">
+          {#each [...Array(numReps).keys()] as repNum}
             <input type="number" id="workout-{workoutNum}-weight-{repNum}" class="weight-input" step=1 value={activeRoutine.workouts[workoutNum].weights[repNum]}> LB
             <input type="number" id="workout-{workoutNum}-rep-{repNum}" class="rep-input" step=1 value={activeRoutine.workouts[workoutNum].reps[repNum]}> REPS
-            <div class=add-remove-wrapper>
-              <button class="circle-btn bottom-btn" on:click={() => addRep(workoutNum)}>+</button>
-              <button class="circle-btn bottom-btn" on:click={() => removeRep(workoutNum)}>-</button>
-            </div>
+            <img src="icons/circle-up-arrow.png" alt="more reps than last time" width=15>
+            <br>
           {/each}
+          <div class=add-remove-wrapper>
+            <button class="circle-btn bottom-btn" on:click={() => addRep(workoutNum)}>+</button>
+            <button class="circle-btn bottom-btn" on:click={() => removeRep(workoutNum)}>-</button>
+          </div>
         </div>
       </div>
     {/each}
