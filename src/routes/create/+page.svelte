@@ -4,13 +4,14 @@
   import WorkoutInfoModal from '../../components/WorkoutInfoModal.svelte';
   import {addWorkoutRoutine, removeWorkoutRoutine, updateProperty, workoutRoutines} from '../../stores/stores';
 
-  let numWorkouts = 0;
+  let numWorkouts = 1;
   let routineName = '';
   let modification = '';
   let activeTab = "create";
   let greyOut = false;
   let selectedWorkout;
-  let workouts = [];
+  let workouts = [{name: '', weighted: false, timed: false, accessory: '', accWeight: null}];
+  let routine = {name: '', modification: '', exercises: []};
 
   let routines;
   workoutRoutines.subscribe(value => {
@@ -28,7 +29,7 @@
   }
 
   async function callCreateRoutine(e) {
-    await addWorkoutRoutine(modification === '' ? routineName : routineName + "-mod-" + modification, {workouts});
+    addWorkoutRoutine(modification === '' ? routineName : routineName + "-mod-" + modification, workouts);
   }
 
   function updateRoutineName(e) {

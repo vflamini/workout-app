@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS workout (
 	routine_id INT,
 	FOREIGN KEY (routine_id) REFERENCES routine(id),
 	PRIMARY KEY (id)
-)
+);
 
 CREATE TABLE IF NOT EXISTS routine_exercise (
 	routine_id INT,
@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS person (
 	fname VARCHAR(50),
 	lname VARCHAR(50),
 	ht DECIMAL(2,1),
-	wt DECIMAL(3,1)
+	wt DECIMAL(3,1),
 	PRIMARY KEY (id)
 );
 

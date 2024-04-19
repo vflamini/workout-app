@@ -1,8 +1,11 @@
 import { writable } from 'svelte/store';
+import {createRoutine} from '../sql/CreateRoutine';
+import { getAllRoutines } from '../sql/GetAllRoutines';
 
 export const workoutRoutines = writable([]);
 
 export const addWorkoutRoutine = (workoutName, properties) => {
+  createRoutine(workoutName, properties);
   workoutRoutines.update((obj) => {
     return {...obj,[workoutName]: properties};
   })
@@ -22,5 +25,9 @@ export const updateProperty = (workoutName, property, newValue) => {
     const newObj = {...obj};
     newObj[workoutName][property] = newValue;
     return newObj;
-  })
+  });
+};
+
+export const initWorkoutRoutines = async () => {
+  await getAllRoutines();
 }

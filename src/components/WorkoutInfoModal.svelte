@@ -3,21 +3,7 @@
 
   export let greyOut;
   export let selectedWorkout = 0;
-  export let workouts = [{
-      weighted: false,
-      timed: false,
-      accessory: '',
-      accWeight: null
-    }];
-
-  if (workouts.length === 0) {
-    workouts = [{
-      weighted: false,
-      timed: false,
-      accessory: '',
-      accWeight: null
-    }]
-  }
+  export let workouts;
   
   const dispatch = createEventDispatcher();
 
@@ -26,6 +12,7 @@
   }
 
   function submitInfo() {
+    console.log(workouts);
     greyOut = false;
   }
 </script>
@@ -34,14 +21,14 @@
   <div class="modal-window">
     <div class="title-wrapper">
       <img src="icons/info.png" width=25 class="info-icon" alt="workout info window logo">
-      <h3>{workouts[selectedWorkout].name}</h3>
+      <h3>{workouts.length > 0 ? workouts[selectedWorkout].name : ""}</h3>
       <button on:click={closeModal} class="circle-btn">X</button>
     </div>
     <div class="checkbox-wrapper">
       <label for="weight-check">WEIGHT</label>
-      <input type="checkbox" id="weight-check" bind:value={workouts[selectedWorkout].weighted}>
+      <input type="checkbox" id="weight-check" bind:checked={workouts[selectedWorkout].weighted}>
       <label for="timed-check">TIMED</label>
-      <input type="checkbox" id="timed-check" bind:value={workouts[selectedWorkout].timed}>
+      <input type="checkbox" id="timed-check" bind:checked={workouts[selectedWorkout].timed}>
     </div>
     <div class="form-wrapper">
       <div class="input-wrapper">

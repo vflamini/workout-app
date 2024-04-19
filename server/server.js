@@ -37,6 +37,18 @@ app.get('/api/get/:table/:col/:value', (req,res) => {
   })
 })
 
+app.get('/api/gettable/:table', (req,res) => {
+	const table = req.params.table;
+	const col = req.params.col;
+	const value = req.params.value;
+	db.query('SELECT * FROM ??', [table], (err,result) => {
+		if (err) {
+			console.log(err);
+		}
+		res.send(result);
+  })
+})
+
 app.get('/api/getcol/:getcol/:table/:col/:value', (req,res) => {
 	const table = req.params.table;
 	const col = req.params.col;
@@ -107,7 +119,6 @@ app.post('/api/insert/:table/:col/:value', (req,res) => {
 app.post('/api/insertfull/:table', (req,res) => {
   const table = req.params.table;
   const data = req.body;
-  console.log(data);
   const columns = Object.keys(data).join(', ');
   const values = Object.values(data);
   const placeholders = new Array(values.length).fill('?').join(', ');

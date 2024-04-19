@@ -1,6 +1,13 @@
 <script>
+  import { onMount } from 'svelte';
   import Layout from '../components/Layout.svelte';
+  import { initWorkoutRoutines } from '../stores/stores';
   let activeTab = "home";
+
+  onMount(async () => {
+    await initWorkoutRoutines();
+  });
+
 </script>
 <style>
   .buttons {
@@ -23,6 +30,7 @@
     color: white;
   }
 </style>
+
 <Layout {activeTab}>
   <div class="page-body buttons">
     <button>START ROUTINE</button>
